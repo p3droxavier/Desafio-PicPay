@@ -23,17 +23,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 //ANOTAÇÕES
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name="users")
 @Table(name="users")
 @Getter 
 @Setter 
-@AllArgsConstructor
 @EqualsAndHashCode(of="id")
 public class User {
 	@Id
@@ -49,7 +52,7 @@ public class User {
 	private String email; //EMAIL
 	
 	private String password; //SENHA
-	private BigDecimal baçance; //SALDO TOTAL
+	private BigDecimal balance; //SALDO TOTAL
 	
 	@Enumerated(EnumType.STRING)
 	private UserType userType; //TIPO DO USUÁRIO
