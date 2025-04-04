@@ -14,6 +14,9 @@
 package com.picpaysimplificado.domain.user;
 
 import java.math.BigDecimal;
+
+import com.picpaysimplificado.dto.UserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,7 +43,7 @@ import lombok.Setter;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String fistName; //PRIMEIRO NOME
 	private String lastName; //SOBRE NOME
 	
@@ -55,4 +58,16 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private UserType userType; //TIPO DO USUÁRIO
+	
+	
+	//METODO RECEBE O 'UserDTO'
+	public User(UserDTO data) {
+		this.fistName = data.firstName();
+		this.lastName = data.lastName();
+		//this.document = data.document();
+		this.balance = data.balance();
+		this.email = data.email();
+		this.password = data.password();
+		this.userType = data.userType();
+	}
 }
