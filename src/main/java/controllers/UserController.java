@@ -19,15 +19,19 @@ public class UserController {
 	@Autowired
 	private UserService userServise;
 
-	@PostMapping //END POINT PARA CRIAÇÃO DE USUÁRIO
+	
+	//END POINT PARA CRIAÇÃO DE USUÁRIO
+	@PostMapping 
 	public ResponseEntity<User> createUser(UserDTO user) {
 		User newUser = userServise.createUser(user);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 	
+	
 	//END POINT DE LISTAGEM DE USUÁRIOS
 	@GetMapping
 	public ResponseEntity<List<User>> getAllUsers(){
-		return this.userServise.getAllUsers();
+		List<User> users =  this.userServise.getAllUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 }
