@@ -1,0 +1,8 @@
+{
+    "firstName": "Pedro ",
+    "lastName": "Moura", 
+    "document": "52315226568",
+    "email": "pedromoura@example.com",
+    "type": "COMMON",
+    "balance": 10
+}
