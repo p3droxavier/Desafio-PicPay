@@ -24,9 +24,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.picpaysimplificado.domain.transaction.Transaction;
-import com.picpaysimplificado.domain.transaction.TransactionRepository;
 import com.picpaysimplificado.domain.user.User;
 import com.picpaysimplificado.dto.TransactionDTO;
+import com.picpaysimplificado.repositories.TransactionRepository;
 
 @Service
 public class TransactionService {
@@ -39,12 +39,15 @@ public class TransactionService {
 	private TransactionRepository repository;
 	
 	//REST TEMPLATE PARA FAZER A REQUISIÇÃO HTTP 
-	@Autowired 
+	@Autowired 	
 	private RestTemplate restTemplate;
 	
+	//CHAMADA PARA notificationService 
+	@Autowired
+	private NotificationService notificationService;
 	
 
-	public void createTransaction(TransactionDTO transaction) throws Exception {
+	public Transaction createTransaction(TransactionDTO transaction) throws Exception {
 		//BUSCA UM USUÁRIO PELO 'senderId' E O ARMAZENA NA VÁRIAVEL SENDER.
 		User sender = this.userService.findUserById(transaction.senderId()); //PELO ID DE QUEM ENVIOU(senderId)
 		
@@ -55,15 +58,15 @@ public class TransactionService {
 		//VALIDAÇÃO DO USUÁRIO
 		userService.validateTransaction(sender, transaction.value());
 		
+		 
 		//SALVANDO A ALTORIZAÇÃO DA TRANSAÇÃO EM UM BOOLEAN
 		boolean isAuthorized = this.authorizeTransaction(sender, transaction.value());
-		
 		
 		//VERIFICAÇÃO DE TRANSAÇÃO AUTORIZADA (SE NÃO ESTIVER AUTORIZADO LANÇA UMA EXCEÇÃO)
 		if(!isAuthorized) {
 			throw new Exception("Transação não autorizada! ");
 		}
-		
+		 
 		//CRIANDO NOVA TRANSAÇÃO NA TABELA
 		Transaction newTransaction = new Transaction();
 		newTransaction.setAmount(transaction.value());
@@ -84,17 +87,21 @@ public class TransactionService {
 		this.userService.saveUser(sender); 
 		this.userService.saveUser(receiver);
 		
+		//ENVIO DE NOTIFICAÇÃO 
+		this.notificationService.sendNotification(sender, "Transação realizada com sucesso! ");
+		this.notificationService.sendNotification(receiver, "Transação recebida com sucesso! ");
+		
+		return newTransaction;
 	}
 	
 	public boolean authorizeTransaction(User sender, BigDecimal value) {
-		
 		@SuppressWarnings("rawtypes")
 		ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
 		
 		if(authorizationResponse.getStatusCode() == HttpStatus.OK) {
 			String message = (String) authorizationResponse.getBody().get("message");
-			//COMPARANDO A STRING 'Autorizado' COM O QUE VIER NA MENSAGEM
-			return "Autorizado".equalsIgnoreCase(message);
+			//COMPARANDO A STRING 'Autorizado' COM O QUE VIER NO 'message'
+			return "authorization".equalsIgnoreCase(message);
 		} else return false;
 	}
 }

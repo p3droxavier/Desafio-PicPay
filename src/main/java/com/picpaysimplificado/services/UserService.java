@@ -13,7 +13,7 @@
  *  '() throws Exception {...}' - É USADO PARA ADIAR A CRIÇÃO DA EXCEÇÃO ATÉ QUE ELA REALMENTE SEJA NECESSÁRIA
  *  
  *  'return this.repository.findById(id).orElseThrow(() -> new Exception(" "))' - 
- *       - 'findById(id)' - REOTRNA UM 'Optional<>'QUE PODE CONTER O USUARIO ENCONTRADO OU ESTAR VAZIO
+ *       - 'findById(id)' - RETORNA UM 'Optional<>'QUE PODE CONTER O USUARIO ENCONTRADO OU ESTAR VAZIO
  *       - '.orElseThrow(() -> new Exception(" ")' SE O OPTIONAL ESTIVER VAZIO (SE O USUARIO NÃO FOR ENCONTRADO) O METODO 
  *         '.orElseThrow' LANÇA UM EXCEÇÃO USANDO UMA ESPRESSÃO LAMBDA QUE CRIA UMA NOVA INSTÂNCIA DE 'Exception' COM A MENSAGEM.
  * */
@@ -47,7 +47,7 @@ public class UserService {
 		
 		//VERIFICA O SALDO DE QUEM ENVIOU
 		if(sender.getBalance().compareTo(amount) < 0) {
-			throw new Exception("Saldo suficiente! ");
+			throw new Exception("Saldo insuficiente! ");
 		}
 	}
 	

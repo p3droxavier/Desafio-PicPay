@@ -64,7 +64,7 @@ public class User {
 	public User(UserDTO data) {
 		this.fistName = data.firstName();
 		this.lastName = data.lastName();
-		//this.document = data.document();
+		this.document = data.document();
 		this.balance = data.balance();
 		this.email = data.email();
 		this.password = data.password();
