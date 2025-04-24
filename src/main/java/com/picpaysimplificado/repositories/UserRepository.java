@@ -1,7 +1,7 @@
 /* ANOT COD
  * 
  * 'Optional<User> findUserByDocument(String document);' - METODO QUE BUSCA UM USUARIO PELO DOCUMENTO 
- *      'Optional<User>' - RETORNA UM OBJETO OPCIONAL QUE PODE CONTER UM 'USER' OU ESTAR FAZIA.
+ *      'Optional<User>' - RETORNA UM OBJETO OPCIONAL QUE PODE CONTER UM 'USER' OU ESTAR VAZIA.
  *      '(String document)' - PARAMETRO QUE REPRESENTA O DOCUMENTO USADO NA BUSCA.
  * 
  * OBS: O JPA FAZ UMA BUSCA INTELIGENTE, ONDE AO PEGAR 'findUserByDocument' ELE ENTENDE QUE PRECISA 'ENCONTRAR USUARIO PELO DOCUMENTO'.
@@ -16,8 +16,8 @@ import com.picpaysimplificado.domain.user.User;
 
 //PASSANDO DENTRO DE <> QUAL TABELA A SER MANIPULADA, E QUAL O TIPO DO ID
 public interface UserRepository extends JpaRepository<User, Long> {
-	
+	//BUSCAR O USUARIO PELO SEU DOCUMENTO 
 	Optional<User> findUserByDocument(String document);
-	
+	//BUSCAR O USUÁRIO PELO SEU ID
 	Optional<User> findUserById(Long id);
 }

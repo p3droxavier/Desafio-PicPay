@@ -1,3 +1,9 @@
+/* ANOT
+ * 
+ * AQUI FICA O CONTRLADOR REST EM SPRING PARA A GERENCIA DE USUARIOS
+ * 
+ * */
+
 package com.picpaysimplificado.controllers;
 
 import java.util.List;
@@ -20,13 +26,13 @@ import com.picpaysimplificado.services.UserService;
 public class UserController {
 	
 	@Autowired
-	private UserService userServise;
+	private UserService userService;
 
 	
 	//END POINT PARA CRIAÇÃO DE USUÁRIO
 	@PostMapping 
 	public ResponseEntity<User> createUser(@RequestBody UserDTO user) { //INDICA QUE PRECISA INJETAR NO CORPO DA REQUISIÇÃO
-		User newUser = userServise.createUser(user);
+		User newUser = userService.createUser(user);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 	
@@ -34,7 +40,7 @@ public class UserController {
 	//END POINT DE LISTAGEM DE USUÁRIOS
 	@GetMapping
 	public ResponseEntity<List<User>> getAllUsers(){
-		List<User> users =  this.userServise.getAllUsers();
+		List<User> users =  this.userService.getAllUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 }

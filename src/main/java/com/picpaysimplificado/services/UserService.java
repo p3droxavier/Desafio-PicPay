@@ -35,6 +35,7 @@ import com.picpaysimplificado.repositories.UserRepository;
 public class UserService {
 	
 	@Autowired
+	//SERA USADO POSTERIORMENTE PARA INTERAGIR COM O BANCO
 	private UserRepository repository;
 	
 	//METODO DE VALIDAÇÃO

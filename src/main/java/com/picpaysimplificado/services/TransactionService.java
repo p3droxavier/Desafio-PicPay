@@ -8,6 +8,8 @@
  *  
  *  '(String) authorizationResponse.getBody().get("message");' REALIZAÇÃO DE UM CASTING
  *       - FORÇA UM OBJETO DE UM TIPO PARA OUTRO TIPO, NESSE CASO DE UM OBJETO PARA STRING, PARA GUARDA-LO EM 'message'
+ *       
+ *  '.equalsIgnoreCase' - IGNORA MAIÚSCULO OU MINúSCULO
  *  
  * */
 
@@ -94,6 +96,7 @@ public class TransactionService {
 		return newTransaction;
 	}
 	
+	//VERIFICA SE A TRANSAÇÃO ESTA AUTORIZADA POR MEIO DA REQUISIÇÃO HTTP 
 	public boolean authorizeTransaction(User sender, BigDecimal value) {
 		@SuppressWarnings("rawtypes")
 		ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
@@ -101,7 +104,7 @@ public class TransactionService {
 		if(authorizationResponse.getStatusCode() == HttpStatus.OK) {
 			String message = (String) authorizationResponse.getBody().get("message");
 			//COMPARANDO A STRING 'Autorizado' COM O QUE VIER NO 'message'
-			return "authorization".equalsIgnoreCase(message);
+			return "Autorizado".equalsIgnoreCase(message);
 		} else return false;
 	}
 }
