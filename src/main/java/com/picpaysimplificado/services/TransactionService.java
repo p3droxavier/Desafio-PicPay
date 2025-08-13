@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -98,13 +99,54 @@ public class TransactionService {
 	
 	//VERIFICA SE A TRANSAÇÃO ESTA AUTORIZADA POR MEIO DA REQUISIÇÃO HTTP 
 	public boolean authorizeTransaction(User sender, BigDecimal value) {
-		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
+		try {
+			@SuppressWarnings("rawtypes")
+			ResponseEntity<Map> response = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
+			
+			if(response.getStatusCode() == HttpStatus.OK) {
+				@SuppressWarnings("unchecked") // Evita erro na compilação
+				Map<String, Object> body = response.getBody();
+				
+				if(body != null && body.containsKey("data")) {
+					@SuppressWarnings("unchecked")
+					Map<String, Object> data = (Map<String, Object>) body.get("data");
+					
+					if(data != null && data.containsKey("authorization")) {
+						Boolean isAuthorized = (Boolean) data.get("authorization");
+						return Boolean.TRUE.equals(isAuthorized);
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("Erro na Requisição de autorização: " + e.getMessage());
+		}
 		
-		if(authorizationResponse.getStatusCode() == HttpStatus.OK) {
-			String message = (String) authorizationResponse.getBody().get("message");
-			//COMPARANDO A STRING 'Autorizado' COM O QUE VIER NO 'message'
-			return "Autorizado".equalsIgnoreCase(message);
-		} else return false;
+		return false;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
