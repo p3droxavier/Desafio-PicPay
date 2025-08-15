@@ -44,7 +44,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String fistName; //PRIMEIRO NOME
+	private String firstName; //PRIMEIRO NOME
 	private String lastName; //SOBRE NOME
 	
 	@Column(unique=true)
