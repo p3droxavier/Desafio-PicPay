@@ -62,7 +62,7 @@ public class User {
 	
 	//METODO RECEBE O 'UserDTO'
 	public User(UserDTO data) {
-		this.fistName = data.firstName();
+		this.firstName = data.firstName();
 		this.lastName = data.lastName();
 		this.document = data.document();
 		this.balance = data.balance();
