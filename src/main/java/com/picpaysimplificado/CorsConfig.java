@@ -1,3 +1,5 @@
+/*Evita problema de Cors. Pelo fato do spring e o angular rodarem em portas diferentes*/
+
 package com.picpaysimplificado;
 
 import org.springframework.context.annotation.Bean;
