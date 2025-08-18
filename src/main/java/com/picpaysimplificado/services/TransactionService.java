@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -52,10 +51,10 @@ public class TransactionService {
 
 	public Transaction createTransaction(TransactionDTO transaction) throws Exception {
 		//BUSCA UM USUÁRIO PELO 'senderId' E O ARMAZENA NA VÁRIAVEL SENDER.
-		User sender = this.userService.findUserById(transaction.senderId()); //PELO ID DE QUEM ENVIOU(senderId)
+		User sender = this.userService.findUserByDocument(transaction.senderDocument()); //PELO ID DE QUEM ENVIOU(senderId)
 		
 		//BUSCA UM USUÁRIO PELO 'receiverId' E O ARMAZENA NA VÁRIAVEL REDEIVER.
-		User receiver = this.userService.findUserById(transaction.receiverId()); //PELO ID DE QUEM RECEBEU(receiverId)
+		User receiver = this.userService.findUserByDocument(transaction.receiverDocument()); //PELO ID DE QUEM RECEBEU(receiverId)
 		
 		
 		//VALIDAÇÃO DO USUÁRIO
