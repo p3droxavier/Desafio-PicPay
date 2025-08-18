@@ -50,10 +50,10 @@ public class TransactionService {
 	
 
 	public Transaction createTransaction(TransactionDTO transaction) throws Exception {
-		//BUSCA UM USUÁRIO PELO 'senderId' E O ARMAZENA NA VÁRIAVEL SENDER.
+		//BUSCA UM USUÁRIO PELO 'senderDocument' E O ARMAZENA NA VÁRIAVEL SENDER.
 		User sender = this.userService.findUserByDocument(transaction.senderDocument()); //PELO ID DE QUEM ENVIOU(senderId)
 		
-		//BUSCA UM USUÁRIO PELO 'receiverId' E O ARMAZENA NA VÁRIAVEL REDEIVER.
+		//BUSCA UM USUÁRIO PELO 'receiverDocument' E O ARMAZENA NA VÁRIAVEL REDEIVER.
 		User receiver = this.userService.findUserByDocument(transaction.receiverDocument()); //PELO ID DE QUEM RECEBEU(receiverId)
 		
 		

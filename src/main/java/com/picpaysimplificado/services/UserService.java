@@ -57,7 +57,7 @@ public class UserService {
 		return this.repository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado! "));
 	}
 	
-	// PEGANDO USUÁRIO
+	// PEGANDO USUÁRIO PELO DOCUMENT
 	public User findUserByDocument(String document) throws Exception {
 		return this.repository.findUserByDocument(document).orElseThrow(() -> new Exception("Usuário não encontrado! " + document));
 	}
